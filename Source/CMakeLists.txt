@@ -1,0 +1,61 @@
+if (WORKING_FROM_TOP_LEVEL)
+else(WORKING_FROM_TOP_LEVEL)
+    message(FATAL_ERROR "Not working from top level! If you are including this in your own project then please set this variable in your CMakeLists.txt.")
+endif(WORKING_FROM_TOP_LEVEL)
+
+#So FindCG.cmake and FindGLFW.cmake can be found.
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(SAKURA_RENDER_API STREQUAL "OpenGL ES")
+    find_path(GLES_INCLUDE_DIR GLES2/gl2.h)
+    find_library(GLES_LIBRARY NAMES libGLESv2)
+    find_library(EGL_LIBRARY NAMES libEGL)
+    
+    if(EXISTS ${GLES_INCLUDE_DIR}/GLES2/gl2.h)
+        include_directories(${GLES_INCLUDE_DIR})
+        message("GLES include directory found.")
+    else()
+        message(FATAL_ERROR "GLES include dir not found.")
+    endif()
+endif()
+
+if(SAKURA_WINDOW_API STREQUAL "GLFW")
+    if(WIN32)
+        #set(GLFW_INCLUDE_DIR ../ExternalDeps/Windows/glfw-3.38/inclu)
+    endif()
+
+    find_package(GLFW REQUIRED)
+    if(GLFW_FOUND)
+        include_directories(${GLFW_INCLUDE_DIR})
+    endif(GLFW_FOUND)
+endif()
+
+if(SAKURA_SHADER_API STREQUAL "Cg")
+    find_package(CG REQUIRED)
+    if(CG_FOUND)
+        include_directories(${CG_INCLUDE_DIR})
+    endif(CG_FOUND)
+endif()
+
+if(SAKURA_RENDER_API STREQUAL "OpenGL")
+    find_package(OpenGL REQUIRED)
+    if(OPENGL_FOUND)
+        include_directories(${OPENGL_INCLUDE_DIR})
+    endif(OPENGL_FOUND)
+
+    if(WIN32)
+        set(GLEW_USE_STATIC_LIBS true)
+        add_definitions(-DGLEW_STATIC)
+        find_package(GLEW REQUIRED)
+        if (GLEW_FOUND)
+            include_directories(${GLEW_INCLUDE_DIR})
+        endif(GLEW_FOUND)
+    endif()
+endif()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+add_subdirectory(Sakura)
+add_subdirectory(SakuraMaths)
+add_subdirectory(SakuraNet)
+add_subdirectory(SakuraThread)

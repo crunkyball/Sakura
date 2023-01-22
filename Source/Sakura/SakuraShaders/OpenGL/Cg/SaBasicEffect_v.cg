@@ -1,0 +1,23 @@
+struct ShaderOutput
+{
+    float4 position : POSITION;
+    float4 colour   : COLOR;
+    float2 texCoord : TEXCOORD0;
+};
+
+ShaderOutput main(float4 position : POSITION : ATTR0,
+                  float4 colour : COLOR : ATTR1,
+                  float2 texCoord : TEXCOORD0 : ATTR2,
+                  uniform float4x4 modelMatrix,
+                  uniform float4x4 viewMatrix,
+                  uniform float4x4 projectionMatrix)
+{
+    ShaderOutput output;
+    
+    float4x4 modelViewMatrix = mul(viewMatrix, modelMatrix);
+    float4x4 modelViewProjMatrix = mul(projectionMatrix, modelViewMatrix);
+    output.position = mul(modelViewProjMatrix, position);
+    output.colour = colour;
+    output.texCoord = texCoord;
+    return output;
+}

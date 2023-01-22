@@ -1,0 +1,85 @@
+#This needs to be included in the app CMakeLists.txt
+
+set(SAKURA_RENDER_API "OpenGL" CACHE STRING "Render API")
+set_property(CACHE SAKURA_RENDER_API PROPERTY STRINGS "OpenGL" "OpenGL ES")
+
+set(SAKURA_WINDOW_API "GLFW" CACHE STRING "Window API")
+set_property(CACHE SAKURA_WINDOW_API PROPERTY STRINGS "GLFW" "Native")
+
+set(SAKURA_SHADER_API "GLSL" CACHE STRING "Shader System")
+set_property(CACHE SAKURA_SHADER_API PROPERTY STRINGS "GLSL" "Cg")
+
+option(SAKURA_FORCE_PLATFORM_RPI "Force platform to Raspberry Pi" OFF)
+
+#--- ERROR CHECKING FOR THE OPTIONS DEFINED ABOVE ---
+
+if(SAKURA_RENDER_API STREQUAL "OpenGL")
+    if(SAKURA_WINDOW_API STREQUAL "Native")
+        message(FATAL_ERROR "Native windowing with OpenGL not supported.")
+    endif()
+endif()
+
+if(SAKURA_RENDER_API STREQUAL "OpenGL ES")
+    if(SAKURA_SHADER_API STREQUAL "Cg")
+        message(FATAL_ERROR "Cg and GLES not supported.")
+    endif()
+    if(SAKURA_WINDOW_API STREQUAL "GLFW")
+        message(FATAL_ERROR "GLFW and GLES not supported.")
+    endif()
+endif()
+
+if(SAKURA_FORCE_PLATFORM_RPI)
+    if(SAKURA_RENDER_API STREQUAL "OpenGL")
+        message(FATAL_ERROR, "Raspberry Pi must use OpenGL ES.")
+    endif()
+endif()
+
+#--- END OF ERROR CHECKING ---
+
+if (SAKURA_FORCE_PLATFORM_RPI)
+    set(PLATFORM_DIR "RPi")
+    add_definitions(-DSA_PLATFORM_UNIX)
+elseif(APPLE)
+    set(PLATFORM_DIR "Mac")
+    add_definitions(-DSA_PLATFORM_MAC)
+elseif(WIN32)
+    set(PLATFORM_DIR "Windows")
+    add_definitions(-DSA_PLATFORM_WINDOWS)
+elseif(UNIX)
+    set(PLATFORM_DIR "Unix")
+    add_definitions(-DSA_PLATFORM_UNIX)
+endif()
+
+if(SAKURA_RENDER_API STREQUAL "OpenGL")
+    set(RENDER_API_DIR "OpenGL")
+elseif(SAKURA_RENDER_API STREQUAL "OpenGL ES")
+    set(RENDER_API_DIR "GLES")
+endif()
+
+if(SAKURA_WINDOW_API STREQUAL "GLFW")
+    set(WINDOW_API_DIR "GLFW")
+elseif(SAKURA_WINDOW_API STREQUAL "Native")
+    set(WINDOW_API_DIR ${PLATFORM_DIR})
+endif()
+
+if(SAKURA_SHADER_API STREQUAL "GLSL")
+    set(SHADER_API_DIR "GLSL")
+elseif(SAKURA_SHADER_API STREQUAL "Cg")
+    set(SHADER_API_DIR "Cg")
+endif()
+
+#Set up platform specific dirs.
+add_definitions(-DSA_PLATFORM_DIR=Platform/${PLATFORM_DIR})
+add_definitions(-DSA_RENDER_API_DIR=Platform/${RENDER_API_DIR})
+add_definitions(-DSA_WINDOW_API_DIR=Platform/${RENDER_API_DIR}/${WINDOW_API_DIR})
+add_definitions(-DSA_EFFECT_API_DIR=Platform/${SHADER_API_DIR})
+
+#Define the build type.
+foreach(config IN LISTS CMAKE_CONFIGURATION_TYPES ITEMS ${CMAKE_BUILD_TYPE})
+    #string(TOUPPER ${config} configUpper)
+    if (config MATCHES "Debug")
+        set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:${config}>:SA_BUILD_DEBUG>)
+    else()
+        set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:${config}>:SA_BUILD_RELEASE>)
+    endif()
+endforeach()

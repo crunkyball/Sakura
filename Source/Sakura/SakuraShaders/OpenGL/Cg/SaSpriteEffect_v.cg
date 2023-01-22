@@ -1,0 +1,11 @@
+void main(float2 position : POSITION : ATTR0,
+          float2 texCoord : TEXCOORD0 : ATTR2,
+          uniform float4x4 modelMatrix,
+          uniform float4x4 projectionMatrix,
+          out float4 outPosition : POSITION,
+          out float2 outTexCoord : TEXCOORD0)
+{
+    float4x4 modelProjMatrix = mul(projectionMatrix, modelMatrix);
+    outPosition = mul(modelProjMatrix, float4(position, 0.0f, 1.0f));
+    outTexCoord = texCoord;
+}

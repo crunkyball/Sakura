@@ -1,0 +1,11 @@
+void main(float3 position : POSITION : ATTR0,
+          float3 colour : COLOR : ATTR1,
+          uniform float4x4 viewMatrix,
+          uniform float4x4 projectionMatrix,
+          out float4 outPosition : POSITION,
+          out float4 outColour : COLOR)
+{
+    float4x4 viewProjectionMatrix = mul(projectionMatrix, viewMatrix);
+    outPosition = mul(viewProjectionMatrix, float4(position, 1.0));
+    outColour = float4(colour, 1.0);
+}

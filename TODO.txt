@@ -1,0 +1,15 @@
+Drop SDL for GLFW as I really only want windowing and input.
+
+Fix the threaded renderer so that important jobs don't have to clear the non-important job queue. 
+Do this by adding an intermediate "dying" state.
+
+Severely reduce (or remove) the members in the RenderJob as it'll cause a lot of cache misses.
+Add a render memory buffer and all job data can be pushed and popped into that as needed.
+
+Add lock-free support to the threading library. Currently all asynchronous data structures block.
+
+Add render target support.
+
+Add deferred rendering support.
+
+Add different light types. Point, directional, spotlight.

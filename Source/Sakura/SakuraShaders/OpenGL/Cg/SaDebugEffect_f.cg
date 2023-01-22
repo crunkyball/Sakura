@@ -1,0 +1,5 @@
+void main(float4 colour : COLOR,
+          out float4 outColour : COLOR)
+{
+    outColour = colour;
+}

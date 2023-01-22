@@ -1,0 +1,67 @@
+struct Material
+{
+    float3 emissive;
+    float3 ambient;
+    float3 diffuse;
+    float3 specular;
+    float shininess;
+};
+
+struct Light
+{
+    float3 position;
+    float3 colour;
+};
+
+static const int MAX_LIGHTS = 2;
+
+void ComputeLighting(Light light, 
+                     float3 P, 
+                     float3 N, 
+                     float3 eyePosition, 
+                     float shininess,
+                     out float3 lightDiffuse,
+                     out float3 lightSpecular)
+{
+    float3 L = normalize(light.position - P);
+    float diffuse = max(dot(L, N), 0);
+    lightDiffuse = light.colour * diffuse;
+    
+    float3 V = normalize(eyePosition - P);
+    float3 H = normalize(L + V);
+    float specular = pow(max(dot(H, N), 0), shininess);
+    if (diffuse <= 0)
+        specular = 0;
+    lightSpecular = light.colour * specular;
+}
+
+void main(uniform float3 eyePosition,
+          uniform float3 globalAmbient,
+          uniform const int numLights,
+          uniform Light lights[MAX_LIGHTS],
+          uniform Material material,
+          float4 position : TEXCOORD0,
+          float3 normal : TEXCOORD1,
+          out float4 outColour : COLOR)
+{
+    float3 emissive = material.emissive;
+    float3 ambient = material.ambient * globalAmbient;
+
+    float3 diffuseSum = 0;
+    float3 specularSum = 0;
+    
+    for (int i = 0; i < min(numLights, MAX_LIGHTS); i++)
+    {
+        float3 lightDiffuse;
+        float3 lightSpecular;
+        ComputeLighting(lights[i], position.xyz, normal, eyePosition, material.shininess, lightDiffuse, lightSpecular);
+        diffuseSum += lightDiffuse;
+        specularSum += lightSpecular;
+    }
+    
+    float3 diffuse = material.diffuse * diffuseSum;
+    float3 specular = material.specular * specularSum;
+  
+    outColour.xyz = emissive + ambient + diffuse + specular;
+    outColour.w = 1;
+}

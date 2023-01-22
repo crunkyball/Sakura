@@ -1,0 +1,11 @@
+void main(float4 position : POSITION : ATTR0,
+          float3 normal : NORMAL : ATTR3,
+          uniform float4x4 modelViewProj,
+          out float4 outPosition : POSITION,
+          out float3 outObjectPos : TEXCOORD0,
+          out float3 outNormal : TEXCOORD1)
+{    
+    outPosition = mul(modelViewProj, position);
+    outObjectPos = position.xyz;
+    outNormal = normal;
+}
