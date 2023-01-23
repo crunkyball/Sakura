@@ -22,7 +22,7 @@ namespace SakuraNet
             STATE_CONNECTED
         };
 
-        typedef void (*RecvAppPacketCallback)(SaNetPacket& rPacket);
+        typedef void (*RecvAppPacketCallback)(const SaNetPacket& rPacket);
 
         SaNetConnection();
         SaNetConnection(uint32_t uProtocolID, RecvAppPacketCallback appCallback);
@@ -31,28 +31,28 @@ namespace SakuraNet
         void Initialise();
         bool Open(uint16_t uPort);
         void SetHost(bool bHost) { m_bHost = bHost; }
-        bool IsHost() { return m_bHost; }
-        bool IsConnected() { return m_eState == STATE_CONNECTED; }
-        bool IsDisconnected() { return m_eState == STATE_DISCONNECTED; }
+        bool IsHost() const { return m_bHost; }
+        bool IsConnected() const { return m_eState == STATE_CONNECTED; }
+        bool IsDisconnected() const { return m_eState == STATE_DISCONNECTED; }
 
         void WaitForConnection();
-        void ConnectTo(SaNetAddress& rAddress);
+        void ConnectTo(const SaNetAddress& rAddress);
 
         void Update(uint32_t uDeltaTime);
         void UpdateHeartbeat(uint32_t uDeltaTime);
 
-        bool SendPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket);
-        bool SendPacketToConnected(SaNetPacket& rPacket);
+        bool SendPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket);
+        bool SendPacketToConnected(const SaNetPacket& rPacket);
 
         void ProcessPacketsIn();
-        int32_t ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPacket);
-        void OnReceivedPacket(const SaNetAddress& rSender, SaNetPacket& rPacket);
+        int32_t ReceivePacket(SaNetAddress& rOutSender, SaNetPacket& rOutPacket);
+        void OnReceivedPacket(const SaNetAddress& rSender, const SaNetPacket& rPacket);
 
-        SaNetSocket& GetSocket() { return m_socket; }
-        SaNetAddress& GetConnectedAddress() { return m_connectedAddress; }
+        const SaNetSocket& GetSocket() const { return m_socket; }
+        const SaNetAddress& GetConnectedAddress() const { return m_connectedAddress; }
 
 #ifdef NET_SIMULATION_ENABLED
-        SaNetSimulation& GetNetSimulation() { return m_netSimulation; }
+        const SaNetSimulation& GetNetSimulation() const { return m_netSimulation; }
 #endif
 
     private:

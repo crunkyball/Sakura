@@ -17,21 +17,21 @@ namespace SakuraNet
     {
     public:
         SaNetAddress();
-        SaNetAddress(char* sIPAddress, uint16_t uPort);
-        SaNetAddress(sockaddr_in& rAddress);
+        SaNetAddress(const char* sIPAddress, uint16_t uPort);
+        SaNetAddress(const sockaddr_in& rAddress);
         ~SaNetAddress();
 
         void Initialise();
 
-        void CreateFromSockAddr(sockaddr_in& rAddress);
-        bool CreateFromIPAndPort(char* sIPAddress, uint16_t uPort);
+        void CreateFromSockAddr(const sockaddr_in& rAddress);
+        bool CreateFromIPAndPort(const char* sIPAddress, uint16_t uPort);
 
-        bool IsValid() { return m_bValid; }
+        bool IsValid() const { return m_bValid; }
 
-        char* GetIPAddrString() { return m_sIPAddress; }
-        uint16_t GetPort() { return m_uPort; }
+        const char* GetIPAddrString() const { return m_sIPAddress; }
+        uint16_t GetPort() const { return m_uPort; }
 
-        sockaddr_in& GetSockAddr() { return m_address; }
+        const sockaddr_in& GetSockAddr() const { return m_address; }
 
     private:
         sockaddr_in m_address;

@@ -13,12 +13,12 @@ SaNetAddress::SaNetAddress()
     Initialise();
 }
 
-SaNetAddress::SaNetAddress(char* sIPAddress, uint16_t uPort)
+SaNetAddress::SaNetAddress(const char* sIPAddress, uint16_t uPort)
 {
     CreateFromIPAndPort(sIPAddress, uPort);
 }
 
-SaNetAddress::SaNetAddress(sockaddr_in& rAddress)
+SaNetAddress::SaNetAddress(const sockaddr_in& rAddress)
 {
     CreateFromSockAddr(rAddress);
 }
@@ -35,7 +35,7 @@ void SaNetAddress::Initialise()
     m_uPort = 0;
 }
 
-void SaNetAddress::CreateFromSockAddr(sockaddr_in& rAddress)
+void SaNetAddress::CreateFromSockAddr(const sockaddr_in& rAddress)
 {
     Initialise();
 
@@ -47,7 +47,7 @@ void SaNetAddress::CreateFromSockAddr(sockaddr_in& rAddress)
     m_bValid = true;
 }
 
-bool SaNetAddress::CreateFromIPAndPort(char* sIPAddress, uint16_t uPort)
+bool SaNetAddress::CreateFromIPAndPort(const char* sIPAddress, uint16_t uPort)
 {
     Initialise();
 

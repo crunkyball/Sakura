@@ -38,10 +38,10 @@ namespace SakuraNet
         SaNetSimMethod* CreateMethod(ESimulationMethod eMethod);
         void AddMethod(SaNetSimMethod* pMethod);
 
-        bool SendPacket(SaNetSocket& rSocket, SaNetAddress& rSendTo, SaNetPacket& rPacket);
-        int32_t ReceivePacket(SaNetSocket& rSocket, SaNetAddress& rSender, SaNetPacket& rPacket);
+        bool SendPacket(const SaNetSocket& rSocket, const SaNetAddress& rSendTo, const SaNetPacket& rPacket);
+        int32_t ReceivePacket(const SaNetSocket& rSocket, SaNetAddress& rOutSender, SaNetPacket& rOutPacket);
 
-        void Update(SaNetSocket& rSocket, uint32_t uDeltaTime);
+        void Update(const SaNetSocket& rSocket, uint32_t uDeltaTime);
 
     private:
         SaNetSimMethod* m_methods[METHOD_MAX];
@@ -58,10 +58,10 @@ namespace SakuraNet
 
         //Unless the inherited classes override these everything 
         //will just work as if there was no simulation.
-        virtual bool HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket) { return true; }
+        virtual bool HandleOutgoingPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket) { return true; }
         virtual bool HandleIncomingPacket(SaNetPacket& rPacket) { return true; }
         
-        virtual void Update(SaNetSocket& rSocket, uint32_t uDeltaTime) {};
+        virtual void Update(const SaNetSocket& rSocket, uint32_t uDeltaTime) {};
 
         SaNetSimulation::ESimulationMethod GetMethodType() { return m_eMethodType; }
 
@@ -80,7 +80,7 @@ namespace SakuraNet
     public:
         SaNetSimMethod_DropPackets();
 
-        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket) override;
+        virtual bool    HandleOutgoingPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket) override;
 
         void            SetDropPercentage(uint8_t uDropPercentage) { m_uDropPercentage = uDropPercentage; }
 
@@ -95,8 +95,8 @@ namespace SakuraNet
     public:
         SaNetSimMethod_DelayPackets();
 
-        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket) override;
-        virtual void    Update(SaNetSocket& rSocket, uint32_t uDeltaTime) override;
+        virtual bool    HandleOutgoingPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket) override;
+        virtual void    Update(const SaNetSocket& rSocket, uint32_t uDeltaTime) override;
 
         void            SetDelayTime(int32_t iDelayTime) { m_iDelayTime = iDelayTime; }
 

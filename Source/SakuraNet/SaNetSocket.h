@@ -26,8 +26,8 @@ namespace SakuraNet
         void Close();
         bool IsOpen();
 
-        bool Send(SaNetAddress& rAddress, SaNetPacket& rPacket);
-        int32_t Receive(SaNetAddress& rAddress, SaNetPacket& rPacket);
+        bool Send(const SaNetAddress& rAddress, const SaNetPacket& rPacket) const;
+        int32_t Receive(SaNetAddress& rOutAddress, SaNetPacket& rOutPacket) const;
 
     private:
         SOCKET m_handle;

@@ -36,7 +36,7 @@ namespace SakuraNet
         void Write(uint8_t* pData, uint32_t uSize);
         void Read(uint8_t* pData, uint32_t uSize);
 
-        uint8_t GetPacketType() { return m_uPacketType; }
+        uint8_t GetPacketType() const { return m_uPacketType; }
 
     private:
         uint8_t m_uPacketType;

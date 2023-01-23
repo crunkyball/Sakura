@@ -67,7 +67,7 @@ void SaNetSimulation::Clean()
     }
 }
 
-bool SaNetSimulation::SendPacket(SaNetSocket& rSocket, SaNetAddress& rSendTo, SaNetPacket& rPacket)
+bool SaNetSimulation::SendPacket(const SaNetSocket& rSocket, const SaNetAddress& rSendTo, const SaNetPacket& rPacket)
 {
     for (uint32_t i = 0; i < METHOD_MAX; i++)
     {
@@ -86,13 +86,13 @@ bool SaNetSimulation::SendPacket(SaNetSocket& rSocket, SaNetAddress& rSendTo, Sa
     return rSocket.Send(rSendTo, rPacket);
 }
 
-int32_t SaNetSimulation::ReceivePacket(SaNetSocket& rSocket, SaNetAddress& rSender, SaNetPacket& rPacket)
+int32_t SaNetSimulation::ReceivePacket(const SaNetSocket& rSocket, SaNetAddress& rOutSender, SaNetPacket& rOutPacket)
 {
     for (uint32_t i = 0; i < METHOD_MAX; i++)
     {
         if (m_methods[i] != NULL)
         {
-            if (m_methods[i]->HandleIncomingPacket(rPacket) == false)
+            if (m_methods[i]->HandleIncomingPacket(rOutPacket) == false)
             {
                 //One of the methods wants us to ignore this packet so
                 //pretend it doesn't exist.
@@ -101,10 +101,10 @@ int32_t SaNetSimulation::ReceivePacket(SaNetSocket& rSocket, SaNetAddress& rSend
         }
     }
 
-    return rSocket.Receive(rSender, rPacket);
+    return rSocket.Receive(rOutSender, rOutPacket);
 }
 
-void SaNetSimulation::Update(SaNetSocket& rSocket, uint32_t uDeltaTime)
+void SaNetSimulation::Update(const SaNetSocket& rSocket, uint32_t uDeltaTime)
 {
     for (uint32_t i = 0; i < METHOD_MAX; i++)
     {
@@ -130,7 +130,7 @@ m_uDropPercentage(0)
 {
 }
 
-bool SaNetSimMethod_DropPackets::HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket)
+bool SaNetSimMethod_DropPackets::HandleOutgoingPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket)
 {
     if (m_uDropPercentage > 0 && m_rand.GetUint32(100) < m_uDropPercentage)
     {
@@ -153,7 +153,7 @@ m_iDelayTime(0)
     m_pDelayedPacketItr = &m_delayedPackets[0];
 }
 
-bool SaNetSimMethod_DelayPackets::HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket)
+bool SaNetSimMethod_DelayPackets::HandleOutgoingPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket)
 {
     SA_ASSERT(m_pDelayedPacketItr->delayTime == 0, "Too many packets being sent during delay?");
 
@@ -174,7 +174,7 @@ bool SaNetSimMethod_DelayPackets::HandleOutgoingPacket(SaNetAddress& rSendTo, Sa
     return false;
 }
 
-void SaNetSimMethod_DelayPackets::Update(SaNetSocket& rSocket, uint32_t uDeltaTime)
+void SaNetSimMethod_DelayPackets::Update(const SaNetSocket& rSocket, uint32_t uDeltaTime)
 {
     for (uint32_t i = 0; i < MAX_DELAYED_PACKETS; i++)
     {

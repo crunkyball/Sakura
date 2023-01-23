@@ -84,7 +84,7 @@ bool SaNetSocket::IsOpen()
     return m_handle != 0;
 }
 
-bool SaNetSocket::Send(SaNetAddress& rAddress, SaNetPacket& rPacket)
+bool SaNetSocket::Send(const SaNetAddress& rAddress, const SaNetPacket& rPacket) const
 {
     SA_ASSERT(rAddress.IsValid(), "Invalid address.");
     SA_ASSERT(m_handle != 0, "Invalid socket handle.");
@@ -92,7 +92,7 @@ bool SaNetSocket::Send(SaNetAddress& rAddress, SaNetPacket& rPacket)
     if (m_handle == 0)
         return false;
 
-    int32_t sentBytes = sendto(m_handle, reinterpret_cast<const char*>(rPacket.m_data), rPacket.m_uDataSize, 0, reinterpret_cast<sockaddr*>(&rAddress.GetSockAddr()), sizeof(sockaddr_in));
+    int32_t sentBytes = sendto(m_handle, reinterpret_cast<const char*>(rPacket.m_data), rPacket.m_uDataSize, 0, reinterpret_cast<const sockaddr*>(&rAddress.GetSockAddr()), sizeof(sockaddr_in));
 
     if (sentBytes < 0)
     {
@@ -108,7 +108,7 @@ bool SaNetSocket::Send(SaNetAddress& rAddress, SaNetPacket& rPacket)
     return sentBytes == rPacket.m_uDataSize;
 }
 
-int32_t SaNetSocket::Receive(SaNetAddress& rAddress, SaNetPacket& rPacket)
+int32_t SaNetSocket::Receive(SaNetAddress& rOutAddress, SaNetPacket& rOutPacket) const
 {
     SA_ASSERT(m_handle != 0, "Invalid socket handle.");
 
@@ -118,12 +118,12 @@ int32_t SaNetSocket::Receive(SaNetAddress& rAddress, SaNetPacket& rPacket)
     sockaddr_in from;
     socklen_t fromSize = sizeof(from);
 
-    int32_t receivedBytes = recvfrom(m_handle, reinterpret_cast<char*>(rPacket.m_data), SaNetPacket::MAX_PACKET_SIZE, 0, (sockaddr*)&from, &fromSize);
+    int32_t receivedBytes = recvfrom(m_handle, reinterpret_cast<char*>(rOutPacket.m_data), SaNetPacket::MAX_PACKET_SIZE, 0, reinterpret_cast<sockaddr*>(&from), &fromSize);
 
     if (receivedBytes > 0)
     {
-        rAddress.CreateFromSockAddr(from);
-        rPacket.m_uDataSize = receivedBytes;
+        rOutAddress.CreateFromSockAddr(from);
+        rOutPacket.m_uDataSize = receivedBytes;
     }
     else if (receivedBytes == -1)
     {

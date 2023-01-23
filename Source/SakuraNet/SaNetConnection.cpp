@@ -54,7 +54,7 @@ void SaNetConnection::WaitForConnection()
     m_eState = STATE_CONNECTING;
 }
 
-void SaNetConnection::ConnectTo(SaNetAddress& rAddress)
+void SaNetConnection::ConnectTo(const SaNetAddress& rAddress)
 {
     SA_ASSERT(!m_bHost, "I'm the host.");
 
@@ -79,7 +79,7 @@ void SaNetConnection::ConnectTo(SaNetAddress& rAddress)
     }
 }
 
-bool SaNetConnection::SendPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket)
+bool SaNetConnection::SendPacket(const SaNetAddress& rSendTo, const SaNetPacket& rPacket)
 {
     SA_ASSERT(m_eState > STATE_DISCONNECTED, "Incorrect state.");
     SA_ASSERT(m_socket.IsOpen(), "Socket not open.");
@@ -100,7 +100,7 @@ bool SaNetConnection::SendPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket)
     return bSuccess;
 }
 
-bool SaNetConnection::SendPacketToConnected(SaNetPacket& rPacket)
+bool SaNetConnection::SendPacketToConnected(const SaNetPacket& rPacket)
 {
     return SendPacket(m_connectedAddress, rPacket);
 }
@@ -118,13 +118,13 @@ void SaNetConnection::ProcessPacketsIn()
     }
 }
 
-int32_t SaNetConnection::ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPacket)
+int32_t SaNetConnection::ReceivePacket(SaNetAddress& rOutSender, SaNetPacket& rOutPacket)
 {
     SA_ASSERT(m_eState > STATE_DISCONNECTED, "Incorrect state.");
     SA_ASSERT(m_socket.IsOpen(), "Socket not open.");
 
 #ifdef NET_SIMULATION_ENABLED
-    int32_t bytesRead = m_netSimulation.ReceivePacket(m_socket, rSender, rPacket);
+    int32_t bytesRead = m_netSimulation.ReceivePacket(m_socket, rOutSender, rOutPacket);
 #else
     int32_t bytesRead = m_socket.Receive(rSender, rPacket);
 #endif
@@ -136,7 +136,7 @@ int32_t SaNetConnection::ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPack
     else
     {
         //Check packet header against protocol ID.
-        bool validPacket = rPacket.ReadHeader(m_uProtocolID);
+        bool validPacket = rOutPacket.ReadHeader(m_uProtocolID);
 
         SA_WARNING(validPacket, "Received packet with incorrect protocol ID.");
 
@@ -150,7 +150,7 @@ int32_t SaNetConnection::ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPack
     return bytesRead;
 }
 
-void SaNetConnection::OnReceivedPacket(const SaNetAddress& rSender, SaNetPacket& rPacket)
+void SaNetConnection::OnReceivedPacket(const SaNetAddress& rSender, const SaNetPacket& rPacket)
 {
     m_uTimeout = 0;
 
