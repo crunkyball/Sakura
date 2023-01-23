@@ -147,9 +147,8 @@ namespace Sakura
         {
             if (--pResource->m_refCount <= 0)
             {
-                bool success = false;
                 pResource->m_element.Unload(BIND_FUNC(&OnLoadDone));
-                success = WaitForLoad();
+                WaitForLoad();
 
                 ms_tableMutex.Lock();
                 GetResourceTable<T>()->FastRemove(pResource->m_hash);

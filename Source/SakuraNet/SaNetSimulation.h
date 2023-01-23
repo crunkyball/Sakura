@@ -80,7 +80,7 @@ namespace SakuraNet
     public:
         SaNetSimMethod_DropPackets();
 
-        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket);
+        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket) override;
 
         void            SetDropPercentage(uint8_t uDropPercentage) { m_uDropPercentage = uDropPercentage; }
 
@@ -95,8 +95,8 @@ namespace SakuraNet
     public:
         SaNetSimMethod_DelayPackets();
 
-        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket);
-        virtual void    Update(SaNetSocket& rSocket, uint32_t uDeltaTime);
+        virtual bool    HandleOutgoingPacket(SaNetAddress& rSendTo, SaNetPacket& rPacket) override;
+        virtual void    Update(SaNetSocket& rSocket, uint32_t uDeltaTime) override;
 
         void            SetDelayTime(int32_t iDelayTime) { m_iDelayTime = iDelayTime; }
 

@@ -20,7 +20,7 @@ namespace Sakura
         SaInputComponentFreeCam();
         virtual ~SaInputComponentFreeCam();
 
-        virtual void Update(uint32_t dt);
+        virtual void Update(uint32_t dt) override;
     };
 }
 

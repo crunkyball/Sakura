@@ -49,7 +49,7 @@ void SaInputComponentFreeCam::Update(uint32_t dt)
     if (rKeyboard.IsKeyDown(SA_KEY_K))
         pitch = -0.1f*fSpeed*dt;
 
-    SaCamera* pCamera = (SaCamera*)m_pParent;
+    SaCamera* pCamera = static_cast<SaCamera*>(m_pParent);
 
     //Update camera rotation.
     const SaMatrix33& rCamRot = pCamera->GetRotation();

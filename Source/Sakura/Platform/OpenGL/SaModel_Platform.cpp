@@ -67,7 +67,7 @@ void SaModel_Platform::Render()
     //optimisation later (promise).
     glBindBuffer(GL_ARRAY_BUFFER, m_vertBuffer);
     glVertexAttribPointer(SaEffect::POSITION_ATTR, 3, GL_FLOAT, GL_FALSE, sizeof(SaModel::Vertex), 0);
-    glVertexAttribPointer(SaEffect::NORMAL_ATTR, 3, GL_FLOAT, GL_FALSE, sizeof(SaModel::Vertex), (void*)sizeof(SaVector3));
+    glVertexAttribPointer(SaEffect::NORMAL_ATTR, 3, GL_FLOAT, GL_FALSE, sizeof(SaModel::Vertex), reinterpret_cast<void*>(sizeof(SaVector3)));
     glEnableVertexAttribArray(SaEffect::POSITION_ATTR);
     glEnableVertexAttribArray(SaEffect::NORMAL_ATTR);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indicesBuffer);

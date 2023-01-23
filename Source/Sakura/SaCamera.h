@@ -21,7 +21,7 @@ namespace Sakura
 
         void Initialise(float fAspectRatio, float fov = 45.0f, float fNearPlane = 0.1f, float fFarPlane = 1000.0f);
 
-        virtual void Update(uint32_t dt);
+        virtual void Update(uint32_t dt) override;
 
         const SakuraMaths::SaMatrix44& GetProjectionMatrix() const;
         const SakuraMaths::SaMatrix44& GetViewMatrix() const;

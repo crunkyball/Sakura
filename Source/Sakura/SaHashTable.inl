@@ -66,11 +66,11 @@ namespace Sakura
         Entry* pPrevEntry = NULL;
         Entry** ppInsertEntry = &m_buckets[bucketIdx];
 
-        uint32_t bucketLen = 0;
-
         //The vast majority of the time we shouldn't enter here.
         if (m_buckets[bucketIdx])
         {
+            uint32_t bucketLen = 0;
+
             for (Entry* pEntry = m_buckets[bucketIdx]; pEntry != NULL; pEntry = pEntry->pNext)
             {
                 if (pEntry->hash == hash)

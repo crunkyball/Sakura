@@ -14,6 +14,8 @@ Author: Darrell Blake
 
 using namespace Sakura;
 
+const char* SaWindow::DEFAULT_TITLE = "Sakura Game Framework";
+
 SaWindow::SaWindow() :
     m_platformWindow(this),
     m_state(STATE_UNITIALISED),
@@ -22,16 +24,14 @@ SaWindow::SaWindow() :
     m_clearColour(SaColour::SAKURA),
     m_pKeyboardInputHandler(NULL)
 {
-    strcpy_s(m_title, TITLE_LENGTH, "Sakura Game Framework");
+    strcpy_s(m_title, TITLE_LENGTH, DEFAULT_TITLE);
 }
 
 void SaWindow::Initialise(const char* title, uint32_t width, uint32_t height, SaColour clearColour)
 {
-    const char* pAdd = "Sakura Game Framework";
-
     if (title && strlen(title) > 0)
     {
-        sprintf_s(m_title, title, "%s - %s", title, pAdd);
+        sprintf_s(m_title, TITLE_LENGTH, "%s - %s", title, DEFAULT_TITLE);
     }
 
     m_width = width;

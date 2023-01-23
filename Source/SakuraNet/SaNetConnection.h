@@ -46,7 +46,7 @@ namespace SakuraNet
 
         void ProcessPacketsIn();
         int32_t ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPacket);
-        void OnReceivedPacket(SaNetAddress& rSender, SaNetPacket& rPacket);
+        void OnReceivedPacket(const SaNetAddress& rSender, SaNetPacket& rPacket);
 
         SaNetSocket& GetSocket() { return m_socket; }
         SaNetAddress& GetConnectedAddress() { return m_connectedAddress; }

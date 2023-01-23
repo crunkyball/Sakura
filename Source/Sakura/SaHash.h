@@ -47,7 +47,7 @@ namespace Sakura
     {
         uint32_t len = static_cast<uint32_t>(strlen(pString));
 
-        const uint8_t * data = (const uint8_t*)pString;
+        const uint8_t* data = reinterpret_cast<const uint8_t*>(pString);
         const int nblocks = len / 4;
 
         uint32_t h1 = gs_hashSeed;
@@ -57,7 +57,7 @@ namespace Sakura
 
         //----------
         // body
-        const uint32_t * blocks = (const uint32_t *)(data + nblocks*4);
+        const uint32_t* blocks = reinterpret_cast<const uint32_t*>(data + nblocks*4);
 
         for (int i = -nblocks; i; i++)
         {
@@ -74,7 +74,7 @@ namespace Sakura
 
         //----------
         // tail
-        const uint8_t * tail = (const uint8_t*)(data + nblocks*4);
+        const uint8_t* tail = reinterpret_cast<const uint8_t*>(data + nblocks*4);
 
         uint32_t k1 = 0;
 

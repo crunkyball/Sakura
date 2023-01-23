@@ -20,7 +20,7 @@ namespace Sakura
 
         void Initialise(const SaColour& rColour);
 
-        void Update(uint32_t dt);
+        virtual void Update(uint32_t dt) override;
 
 #ifdef SA_BUILD_DEBUG
         void DebugRender();

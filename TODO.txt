@@ -1,4 +1,6 @@
-Drop SDL for GLFW as I really only want windowing and input.
+Severe lack of const in SaNet!
+
+--- Below is old... may still be relevant but as it's been over 10 years the whole thing needs analysing.
 
 Fix the threaded renderer so that important jobs don't have to clear the non-important job queue. 
 Do this by adding an intermediate "dying" state.

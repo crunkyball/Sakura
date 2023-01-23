@@ -150,7 +150,7 @@ int32_t SaNetConnection::ReceivePacket(SaNetAddress& rSender, SaNetPacket& rPack
     return bytesRead;
 }
 
-void SaNetConnection::OnReceivedPacket(SaNetAddress& rSender, SaNetPacket& rPacket)
+void SaNetConnection::OnReceivedPacket(const SaNetAddress& rSender, SaNetPacket& rPacket)
 {
     m_uTimeout = 0;
 
@@ -194,7 +194,7 @@ void SaNetConnection::UpdateHeartbeat(uint32_t uDeltaTime)
         packet.WriteHeader(m_uProtocolID, PACKET_HEARTBEAT);
         packet.Write(&data, sizeof(data));
         
-        bool bSuccess = SendPacket(m_connectedAddress, packet);
+        SendPacket(m_connectedAddress, packet);
         m_uHeartBeatTime = 0;
     }
 }

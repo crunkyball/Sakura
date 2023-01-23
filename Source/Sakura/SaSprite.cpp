@@ -26,9 +26,9 @@ SaSprite::SaSprite() :
     m_position(SaVector2::ALL_ZERO),
     m_scale(SaVector2::ALL_ONE),
     m_pTexture(NULL),
-    m_pSpriteEffect(NULL)
+    m_pSpriteEffect(NULL),
+    m_colour(1.0f, 1.0f, 1.0f, 1.0f)
 {
-    m_colour = SaColour(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 SaSprite::~SaSprite()

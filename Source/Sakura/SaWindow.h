@@ -68,6 +68,8 @@ namespace Sakura
 
         SaWindow_Platform m_platformWindow;
 
+        static const char* DEFAULT_TITLE;
+
         static const uint32_t MAX_VIEWPORTS = 4;
         uint32_t m_numViewPorts;
         SaViewport m_viewports[MAX_VIEWPORTS];

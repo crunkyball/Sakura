@@ -51,7 +51,7 @@ bool SaThread_Platform::Initialise()
 {
     SA_ASSERT(!m_handle, "Already initialised.");
 
-    int32_t threadId;
+    int32_t threadId = 0;
     m_handle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)m_pParent->m_pFunction, m_pParent->m_pUserData, CREATE_SUSPENDED, (LPDWORD)&threadId);
 
     if (!m_handle)

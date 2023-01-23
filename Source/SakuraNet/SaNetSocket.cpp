@@ -92,7 +92,7 @@ bool SaNetSocket::Send(SaNetAddress& rAddress, SaNetPacket& rPacket)
     if (m_handle == 0)
         return false;
 
-    int32_t sentBytes = sendto(m_handle, (const char*)rPacket.m_data, rPacket.m_uDataSize, 0, (sockaddr*)&rAddress.GetSockAddr(), sizeof(sockaddr_in));
+    int32_t sentBytes = sendto(m_handle, reinterpret_cast<const char*>(rPacket.m_data), rPacket.m_uDataSize, 0, reinterpret_cast<sockaddr*>(&rAddress.GetSockAddr()), sizeof(sockaddr_in));
 
     if (sentBytes < 0)
     {
@@ -118,7 +118,7 @@ int32_t SaNetSocket::Receive(SaNetAddress& rAddress, SaNetPacket& rPacket)
     sockaddr_in from;
     socklen_t fromSize = sizeof(from);
 
-    int32_t receivedBytes = recvfrom(m_handle, (char*)rPacket.m_data, SaNetPacket::MAX_PACKET_SIZE, 0, (sockaddr*)&from, &fromSize);
+    int32_t receivedBytes = recvfrom(m_handle, reinterpret_cast<char*>(rPacket.m_data), SaNetPacket::MAX_PACKET_SIZE, 0, (sockaddr*)&from, &fromSize);
 
     if (receivedBytes > 0)
     {
