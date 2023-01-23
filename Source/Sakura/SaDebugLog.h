@@ -23,9 +23,9 @@ namespace Sakura
         static const uint32_t MAX_MESSAGE_LEN = 256;
         static const uint32_t NUM_MESSAGES = 1024;
 
-        static uint32_t             ms_messageCount;
+        static uint32_t                 ms_messageCount;
         static SakuraThread::SaMutex    ms_messageMutex;
-        static char                 ms_messages[NUM_MESSAGES][MAX_MESSAGE_LEN];
+        static char                     ms_messages[NUM_MESSAGES][MAX_MESSAGE_LEN];
 #endif
     };
 }

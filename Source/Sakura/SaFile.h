@@ -28,9 +28,9 @@ namespace Sakura
         static void     OpenFile(SaFileHandle*& rpHandleOut, const char* pFilename, uint32_t openFlags, bool blockUntilDone, SaCallback<SaFileHandle::EResult, const SaFileHandle*> callback);
 
     private:
-        static void             AddJob(const SaFileJob& rJob);
+        static void     AddJob(const SaFileJob& rJob);
 
-        static void             FileThread_Main();
+        static void     FileThread_Main();
 
         static bool                                     ms_fileThreadExit;
         static SakuraThread::SaThread                   ms_fileThread;

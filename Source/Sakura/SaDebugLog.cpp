@@ -26,7 +26,7 @@ void SaDebugLog::Add(const char* pFmt, ...)
 
     va_list args;
     va_start(args, pFmt);
-    vsprintf(ms_messages[messageIdx], pFmt, args);
+    vsprintf_s(ms_messages[messageIdx], MAX_MESSAGE_LEN, pFmt, args);
     va_end(args);
 
     ms_messageCount++;

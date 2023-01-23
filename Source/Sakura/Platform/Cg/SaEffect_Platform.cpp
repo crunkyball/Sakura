@@ -79,11 +79,11 @@ void SaEffect_Platform::PopulateParams(CGparameter param, SaHashTable<const char
         {
             uint32_t dimensions = cgGetArrayDimension(param);
 
-            for (int d = 0; d < dimensions; d++)
+            for (uint32_t d = 0; d < dimensions; d++)
             {
                 uint32_t size = cgGetArraySize(param, d);
 
-                for (int i = 0; i < size; i++)
+                for (uint32_t i = 0; i < size; i++)
                 {
                     CGparameter arrayParam = cgGetArrayParameter(param, (d+1)*i);
                     PopulateParams(arrayParam, paramTable);

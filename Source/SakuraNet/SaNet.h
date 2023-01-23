@@ -10,7 +10,7 @@ Author: Darrell Blake
 
 #ifdef SA_PLATFORM_WINDOWS
 #include <winsock2.h>
-#define INET_ADDRSTRLEN 16
+#include <ws2tcpip.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -27,10 +27,6 @@ namespace SakuraNet
     {
         CONNECTION_TIMEOUT = 10*1000
     };
-
-#ifdef SA_PLATFORM_WINDOWS
-    typedef int32_t socklen_t;
-#endif
 
     class SaNet
     {

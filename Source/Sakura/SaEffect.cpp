@@ -22,7 +22,7 @@ SaEffect::SaEffect() :
 
 void SaEffect::Initialise()
 {
-    SaRenderJob job(BIND_FUNC(&RenderThread_Initialise, this));
+    SaRenderJob job(BIND_FUNC(&RenderThread_Initialise));
     SaRender::AddRenderJob(job);
 }
 

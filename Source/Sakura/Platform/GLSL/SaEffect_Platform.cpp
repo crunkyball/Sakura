@@ -97,10 +97,17 @@ bool SaEffect_Platform::Load(const uint8_t* pVertexShaderData, const uint8_t* pF
     int32_t maxUniformName;
     glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORMS, &numUniforms);
     glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformName);
+    
+    const int32_t MAX_UNIFORM_NAME_SIZE = 64;
+    char name[MAX_UNIFORM_NAME_SIZE];
 
-    char* name = static_cast<char*>(alloca(maxUniformName));
+    if (maxUniformName >= MAX_UNIFORM_NAME_SIZE)
+    {
+        SA_FAIL("Buffer too small.");
+        return false;
+    }
 
-    for (uint32_t uniformIdx = 0; uniformIdx < numUniforms; uniformIdx++)
+    for (int32_t uniformIdx = 0; uniformIdx < numUniforms; uniformIdx++)
     {
         int32_t size;
         uint32_t type;

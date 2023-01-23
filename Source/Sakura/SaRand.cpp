@@ -40,7 +40,7 @@ uint32_t SaRand::Rand_CMWC()
     m_index = (m_index + 1) & 4095;
     t = a * m_q[m_index] + m_carry;
     m_carry = (t >> 32);
-    x = t + m_carry;
+    x = static_cast<uint32_t>(t + m_carry);
 
     if(x < m_carry)
     {

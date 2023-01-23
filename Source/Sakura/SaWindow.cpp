@@ -22,7 +22,7 @@ SaWindow::SaWindow() :
     m_clearColour(SaColour::SAKURA),
     m_pKeyboardInputHandler(NULL)
 {
-    strcpy(m_title, "Sakura Game Framework");
+    strcpy_s(m_title, TITLE_LENGTH, "Sakura Game Framework");
 }
 
 void SaWindow::Initialise(const char* title, uint32_t width, uint32_t height, SaColour clearColour)
@@ -31,7 +31,7 @@ void SaWindow::Initialise(const char* title, uint32_t width, uint32_t height, Sa
 
     if (title && strlen(title) > 0)
     {
-        sprintf(m_title, "%s - %s", title, pAdd);
+        sprintf_s(m_title, title, "%s - %s", title, pAdd);
     }
 
     m_width = width;

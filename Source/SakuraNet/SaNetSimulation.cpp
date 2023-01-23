@@ -32,14 +32,14 @@ SaNetSimMethod* SaNetSimulation::CreateMethod(ESimulationMethod eMethod)
 
     switch(eMethod)
     {
-    case METHOD_DROP_PACKETS:
-        pMethod = new SaNetSimMethod_DropPackets();
-        break;
-    case METHOD_DELAY_PACKETS:
-        pMethod = new SaNetSimMethod_DelayPackets();
-        break;
-    default:
-        SA_FAIL("Unsupported method.");
+        case METHOD_DROP_PACKETS:
+            pMethod = new SaNetSimMethod_DropPackets();
+            break;
+        case METHOD_DELAY_PACKETS:
+            pMethod = new SaNetSimMethod_DelayPackets();
+            break;
+        default:
+            SA_FAIL("Unsupported method.");
     }
 
     return pMethod;
@@ -162,10 +162,14 @@ bool SaNetSimMethod_DelayPackets::HandleOutgoingPacket(SaNetAddress& rSendTo, Sa
     m_pDelayedPacketItr->sendTo = rSendTo;
 
     //Increment the iterator.
-    if (m_pDelayedPacketItr == &m_delayedPackets[MAX_DELAYED_PACKETS-1])
+    if (m_pDelayedPacketItr == &m_delayedPackets[MAX_DELAYED_PACKETS - 1])
+    {
         m_pDelayedPacketItr = &m_delayedPackets[0];
+    }
     else
+    {
         m_pDelayedPacketItr++;
+    }
 
     return false;
 }

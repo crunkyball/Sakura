@@ -24,8 +24,6 @@ uint32_t SaDataReader::Read32()
     uint32_t val = *reinterpret_cast<const uint32_t*>(m_pPtr);
     m_pPtr += sizeof(val);
     return val;
-
-    return 0;
 }
 
 float SaDataReader::ReadFloat()

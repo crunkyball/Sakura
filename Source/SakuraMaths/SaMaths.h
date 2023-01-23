@@ -10,9 +10,9 @@ Author: Darrell Blake
 #include <cmath>
 
 //Useful constants.
-#define SA_PI       3.14159265358979323846
-#define SA_PIDIV2   1.57079632679489661923
-#define SA_PIDIV4   0.785398163397448309616
+constexpr float SA_PI = 3.14159265358979323846f;
+constexpr float SA_PIDIV2 = 1.57079632679489661923f;
+constexpr float SA_PIDIV4 = 0.785398163397448309616f;
 
 //Useful macros.
 #define SA_ABS(x) (x >= 0 ? x : -(x))

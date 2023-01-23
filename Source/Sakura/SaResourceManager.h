@@ -85,10 +85,10 @@ namespace Sakura
         static SakuraThread::SaThread                       ms_resourceManagerThread;
         static SakuraThread::SaAsyncJobQueue<SaResourceJob> ms_resourceManagerJobQueue;
 
-        static bool                             ms_blockLoadDone;
+        static bool                                 ms_blockLoadDone;
         static SakuraThread::SaMutex                ms_blockLoadMutex;
         static SakuraThread::SaConditionVariable    ms_blockLoadCondition;
-        static bool                             ms_blockLoadResult;
+        static bool                                 ms_blockLoadResult;
 
         static SakuraThread::SaMutex                ms_tableMutex;
         static SaHashTable<const char*, SaResource<SaTexture>>* ms_pTextures;

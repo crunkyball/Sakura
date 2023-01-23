@@ -144,7 +144,7 @@ void SaFileHandle::FileThread_Open(const SaFileJob* pJob)
     if (m_openFlags & FLAG_CREATE)
         flags = "wb+";
 
-    m_pHandle = fopen(m_pFileName, flags);
+    fopen_s(&m_pHandle, m_pFileName, flags);
 
     EResult result = RESULT_FAILED;
 
@@ -166,7 +166,7 @@ void SaFileHandle::FileThread_Read(const SaFileJob* pJob)
 {
     EResult result = RESULT_FAILED;
 
-    uint32_t bytesRead = fread(pJob->GetDestination(), 1, pJob->GetNumBytes(), m_pHandle);
+    uint32_t bytesRead = static_cast<uint32_t>(fread(pJob->GetDestination(), 1, pJob->GetNumBytes(), m_pHandle));
 
     if (bytesRead == pJob->GetNumBytes())
     {
@@ -180,7 +180,7 @@ void SaFileHandle::FileThread_Write(const SaFileJob* pJob)
 {
     EResult result = RESULT_FAILED;
 
-    uint32_t bytesWritten = fwrite(pJob->GetSource(), 1, pJob->GetNumBytes(), m_pHandle);
+    uint32_t bytesWritten = static_cast<uint32_t>(fwrite(pJob->GetSource(), 1, pJob->GetNumBytes(), m_pHandle));
 
     if (bytesWritten == pJob->GetNumBytes())
     {

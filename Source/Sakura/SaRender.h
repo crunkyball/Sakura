@@ -69,9 +69,9 @@ namespace Sakura
         static uint32_t                                     ms_currentWorkingFrame;
         static uint32_t                                     ms_currentRenderFrame;
 
-        static SakuraThread::SaMutex                            ms_jobsMutex;
+        static SakuraThread::SaMutex                        ms_jobsMutex;
         static SaQueue<SaRenderJob>                         ms_renderFrameJobs[NUM_FRAMES];
-        static SakuraThread::SaConditionVariable                ms_renderWaitConditionVariable;
+        static SakuraThread::SaConditionVariable            ms_renderWaitConditionVariable;
     };
 }
 

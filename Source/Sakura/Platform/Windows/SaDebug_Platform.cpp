@@ -12,11 +12,12 @@ Windows platform implementation for SaDebug.
 
 void SaPrintf(const char* pFmt, ...)
 {
-    char buf[1024];
+    static const uint32_t BUF_SIZE = 1024;
+    char buf[BUF_SIZE];
     va_list args;
 
     va_start(args, pFmt);
-    vsprintf(buf, pFmt, args);
+    vsprintf_s(buf, BUF_SIZE, pFmt, args);
     va_end(args);
 
     OutputDebugStringA(buf);

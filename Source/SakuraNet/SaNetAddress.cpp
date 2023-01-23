@@ -39,12 +39,7 @@ void SaNetAddress::CreateFromSockAddr(sockaddr_in& rAddress)
 {
     Initialise();
 
-#ifdef SA_PLATFORM_WINDOWS
-    DWORD resultSize = IP_ADDRESS_SIZE;
-    strcpy(m_sIPAddress, inet_ntoa(rAddress.sin_addr));
-#else
     inet_ntop(AF_INET, &rAddress.sin_addr, m_sIPAddress, IP_ADDRESS_SIZE);
-#endif
 
     m_uPort = ntohs(rAddress.sin_port);
     m_address = rAddress;
@@ -56,13 +51,7 @@ bool SaNetAddress::CreateFromIPAndPort(char* sIPAddress, uint16_t uPort)
 {
     Initialise();
 
-#ifdef SA_PLATFORM_WINDOWS
-    int32_t iSize = sizeof(sockaddr);
-    bool bSuccess = WSAStringToAddress(sIPAddress, AF_INET, NULL, (sockaddr*)&m_address, &iSize) == 0;
-
-#else
     bool bSuccess = inet_pton(AF_INET, sIPAddress, &m_address.sin_addr) == 1;
-#endif
 
     m_address.sin_family = AF_INET;
     m_address.sin_port = htons(uPort);
@@ -70,7 +59,7 @@ bool SaNetAddress::CreateFromIPAndPort(char* sIPAddress, uint16_t uPort)
     if (bSuccess)
     {
         m_bValid = true;
-        strcpy(m_sIPAddress, sIPAddress);
+        strcpy_s(m_sIPAddress, IP_ADDRESS_SIZE, sIPAddress);
         m_uPort = uPort;
     }
     else

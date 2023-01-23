@@ -38,8 +38,8 @@ namespace Sakura
         void                            SetName(const char* pName) { m_pName = pName; }
         const char*                     GetName() const { return m_pName; }
 
-        void                            SetInt(const float var) { m_int = var; }
-        const float                     GetInt() const { return m_int; }
+        void                            SetInt(const int var) { m_int = var; }
+        const int                       GetInt() const { return m_int; }
 
         void                            SetFloat(const float var) { m_float = var; }
         const float                     GetFloat() const { return m_float; }

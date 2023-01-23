@@ -11,7 +11,7 @@ OpenGL/GLFW platform implementation for SaWindow.
 #include "../../../SaCore.h"
 #include "../../../SaKeyboard.h"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace Sakura
 {
