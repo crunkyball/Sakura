@@ -13,7 +13,7 @@ Author: Darrell Blake
 using namespace SakuraNet;
 
 SaNetSocket::SaNetSocket() :
-                m_handle(0)
+    m_handle(0)
 {
 }
 

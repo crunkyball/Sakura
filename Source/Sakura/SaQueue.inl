@@ -12,10 +12,10 @@ namespace Sakura
 
 template <class T>
 SaQueue<T>::SaQueue() :
-    m_capacity(8),
-    m_numItems(0),
     m_headIndex(0),
-    m_tailIndex(0)
+    m_tailIndex(0),
+    m_capacity(8),
+    m_numItems(0)
 {
     m_array = new T[m_capacity];
 }

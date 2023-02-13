@@ -23,11 +23,11 @@ const SaVector2 SaSprite::ms_texCoords[4] = { SaVector2(0.0f, 0.0f),
 const uint16_t SaSprite::ms_indices[4] = { 0, 1, 2, 3 };
 
 SaSprite::SaSprite() :
-    m_position(SaVector2::ALL_ZERO),
-    m_scale(SaVector2::ALL_ONE),
-    m_pTexture(NULL),
     m_pSpriteEffect(NULL),
-    m_colour(1.0f, 1.0f, 1.0f, 1.0f)
+    m_pTexture(NULL),
+    m_colour(1.0f, 1.0f, 1.0f, 1.0f),
+    m_position(SaVector2::ALL_ZERO),
+    m_scale(SaVector2::ALL_ONE)
 {
 }
 

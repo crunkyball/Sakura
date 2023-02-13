@@ -14,7 +14,6 @@ SaFileJob::SaFileJob()
 
 SaFileJob::SaFileJob(uint32_t jobIdx, SaCallback<const SaFileJob*> jobFunc, SaCallback<SaFileHandle::EResult, const SaFileHandle*> callback) :
     m_jobIdx(jobIdx),
-    m_jobResult(SaFileHandle::RESULT_INVALID),
     m_jobFunc(jobFunc),
     m_callback(callback),
     m_pDestination(NULL),

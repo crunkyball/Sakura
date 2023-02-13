@@ -48,8 +48,6 @@ namespace Sakura
     private:
         void PrintError(int32_t handle, const char* reason);
 
-        SaEffect*   m_pParent;
-
         int32_t m_vertexShaderHandle;
         int32_t m_fragmentShaderHandle;
         int32_t m_programHandle;

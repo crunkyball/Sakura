@@ -16,10 +16,11 @@ namespace SakuraThread
         friend class SaThread_Platform;
 
     public:
+        typedef void (*ThreadFunc)();
         SaThread();
         ~SaThread();
 
-        bool Initialise(const char* threadName, void* pFunction, void* pUserData = NULL, EThreadPriority threadPriority = PRIORITY_NORMAL);
+        bool Initialise(const char* threadName, ThreadFunc pFunction, void* pUserData = NULL, EThreadPriority threadPriority = PRIORITY_NORMAL);
         void Release();
 
         void Run();
@@ -34,7 +35,7 @@ namespace SakuraThread
 
         const char* m_threadName;
         EThreadPriority m_threadPriority;
-        void* m_pFunction;
+        ThreadFunc m_pFunction;
         void* m_pUserData;
     };
 }

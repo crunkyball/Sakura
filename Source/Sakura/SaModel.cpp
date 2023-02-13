@@ -15,8 +15,8 @@ using namespace Sakura;
 using namespace SakuraMaths;
 
 SaModel::SaModel() :
-    m_state(STATE_UNLOADED),
     m_platformModel(this),
+    m_state(STATE_UNLOADED),
     m_numVertices(0),
     m_numTriangles(0),
     m_pVertices(NULL),

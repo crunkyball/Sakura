@@ -61,19 +61,11 @@ namespace Sakura
 
         static void ResourceManagerThread_Main();
 
+        //Specialisations for these are in the cpp.
         template <class T>
         static SaHashTable<const char*, SaResource<T>>* GetResourceTable() { SA_FAIL("No specialisation!"); return NULL; }
-        template <>
-        static SaHashTable<const char*, SaResource<SaEffect>>* GetResourceTable<SaEffect>() { return ms_pEffects; }
-        template <>
-        static SaHashTable<const char*, SaResource<SaTexture>>* GetResourceTable<SaTexture>() { return ms_pTextures; }
-        template <>
-        static SaHashTable<const char*, SaResource<SaModel>>* GetResourceTable<SaModel>() { return ms_pModels; }
-
         template <class T>
         static void ResourceManagerThread_Load(const SaResourceJob* pJob);
-        template <>
-        static void ResourceManagerThread_Load<SaEffect>(const SaResourceJob* pJob);
 
         template <class T>
         static void ResourceManagerThread_Unload(const SaResourceJob* pJob);

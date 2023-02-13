@@ -55,6 +55,7 @@ namespace SakuraNet
     {
     public:
         SaNetSimMethod(SaNetSimulation::ESimulationMethod eMethodType);
+        virtual ~SaNetSimMethod() {};
 
         //Unless the inherited classes override these everything 
         //will just work as if there was no simulation.

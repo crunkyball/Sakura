@@ -11,9 +11,9 @@ using namespace Sakura;
 
 SaFileHandle::SaFileHandle(const char* pFileName) :
     m_pFileName(pFileName),
+    m_openFlags(0),
     m_pHandle(NULL),
     m_fileSize(0),
-    m_openFlags(0),
     m_jobCount(0),
     m_blockJobIdx(0),
     m_blockJobResult(RESULT_INVALID)

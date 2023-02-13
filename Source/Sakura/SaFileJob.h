@@ -33,7 +33,6 @@ namespace Sakura
 
     private:
         uint32_t                                                m_jobIdx;
-        SaFileHandle::EResult                                   m_jobResult;
 
         SaCallback<const SaFileJob*>                            m_jobFunc;
         SaCallback<SaFileHandle::EResult, const SaFileHandle*>  m_callback;

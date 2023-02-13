@@ -7,7 +7,7 @@ Author: Darrell Blake
 #error This should be included from SaAsyncJobQueue.h
 #endif
 
-#include "SaDebug.h"
+#include <Sakura/SaDebug.h>
 
 namespace SakuraThread
 {
@@ -50,8 +50,6 @@ void SaAsyncJobQueue<T>::AddJob(const T& rJob)
 template <class T>
 void SaAsyncJobQueue<T>::ProcessJobs(bool blockAndWait)
 {
-    bool processJob = false;
-
     m_jobsMutex.Lock();
 
     while (m_jobs.Size() == 0 && blockAndWait && !m_dying)

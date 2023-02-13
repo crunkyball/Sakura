@@ -9,9 +9,9 @@ Author: Darrell Blake
 using namespace SakuraNet;
 
 SaNetPacket::SaNetPacket() :
-                m_pDataPtr(&m_data[0]),
-                m_uDataSize(0),
-                m_uPacketType(PACKET_UNKNOWN)
+    m_uPacketType(PACKET_UNKNOWN),
+    m_uDataSize(0),
+    m_pDataPtr(&m_data[0])
 {
 }
 

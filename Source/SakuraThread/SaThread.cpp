@@ -20,7 +20,7 @@ SaThread::~SaThread()
 {
 }
 
-bool SaThread::Initialise(const char* threadName, void* pFunction, void* pUserData, EThreadPriority threadPriority)
+bool SaThread::Initialise(const char* threadName, ThreadFunc pFunction, void* pUserData, EThreadPriority threadPriority)
 {
     m_threadName = threadName;
     m_threadPriority = threadPriority;

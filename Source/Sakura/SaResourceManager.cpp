@@ -116,3 +116,46 @@ void SaResourceManager::OnLoadDone(bool success)
 
     ms_blockLoadMutex.Unlock();
 }
+
+//Template specialisations
+template <> SaHashTable<const char*, SaResource<SaEffect>>* SaResourceManager::GetResourceTable<SaEffect>() { return ms_pEffects; }
+template <> SaHashTable<const char*, SaResource<SaTexture>>* SaResourceManager::GetResourceTable<SaTexture>() { return ms_pTextures; }
+template <> SaHashTable<const char*, SaResource<SaModel>>* SaResourceManager::GetResourceTable<SaModel>() { return ms_pModels; }
+
+//Specialise the effect loading as both the vert and fragment shaders are loaded into the resource.
+template <>
+void SaResourceManager::ResourceManagerThread_Load<SaEffect>(const SaResourceJob* pJob)
+{
+    ms_tableMutex.Lock();
+    SaResource<SaEffect>* pEffect = GetResourceTable<SaEffect>()->FastFind(pJob->GetResourceHash());
+    ms_tableMutex.Unlock();
+
+    SaFileLoader vertexShaderLoader;
+    SaFileLoader fragmentShaderLoader;
+
+    if (pEffect)
+    {
+        const int32_t MAX_NAME_SIZE = 64;
+
+        bool success = false;
+        char shaderFileName[MAX_NAME_SIZE];
+        sprintf_s(shaderFileName, MAX_NAME_SIZE, "%s_v%s", pJob->GetFileName(), SaEffect_Platform::FILE_EXTENSION);
+        vertexShaderLoader.Load(shaderFileName, NO_CALLBACK, true, true);
+
+        if (vertexShaderLoader.Succeeded())
+        {
+            sprintf_s(shaderFileName, MAX_NAME_SIZE, "%s_f%s", pJob->GetFileName(), SaEffect_Platform::FILE_EXTENSION);
+            fragmentShaderLoader.Load(shaderFileName, NO_CALLBACK, true, true);
+            if (fragmentShaderLoader.Succeeded())
+            {
+                pEffect->m_element.Load(vertexShaderLoader.GetDataPtr(), fragmentShaderLoader.GetDataPtr(), BIND_FUNC(&OnLoadDone));
+                success = WaitForLoad();
+                fragmentShaderLoader.Release(NO_CALLBACK, true);
+            }
+
+            vertexShaderLoader.Release(NO_CALLBACK, true);
+        }
+
+        pEffect->m_state = success ? SaResource<SaEffect>::STATE_READY : SaResource<SaEffect>::STATE_ERROR;
+    }
+}

@@ -55,7 +55,7 @@ void SaInputComponentFreeCam::Update(uint32_t dt)
     const SaMatrix33& rCamRot = pCamera->GetRotation();
 
     const SaVector3& rLeft = rCamRot.GetColumn0();
-    const SaVector3& rUp = rCamRot.GetColumn1();
+    //const SaVector3& rUp = rCamRot.GetColumn1();
     const SaVector3& rForward = rCamRot.GetColumn2();
 
     SaMatrix33 pitchRot = SaMatrix33::CreateXRotation(pitch);

@@ -74,5 +74,5 @@ uint32_t SaRand::GetUint32(uint32_t min, uint32_t max)
 
 float SaRand::GetFloat()
 {
-    return Rand_CMWC() * (1.0f / 0xFFFFFFFF);
+    return Rand_CMWC() * static_cast<float>(0xFFFFFFFF);
 }

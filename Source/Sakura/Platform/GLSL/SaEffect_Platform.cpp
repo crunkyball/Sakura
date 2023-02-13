@@ -19,7 +19,6 @@ using namespace Sakura;
 const char* SaEffect_Platform::FILE_EXTENSION = ".glsl";
 
 SaEffect_Platform::SaEffect_Platform(SaEffect* pParent) : 
-    m_pParent(pParent),
     m_vertexShaderHandle(0),
     m_fragmentShaderHandle(0),
     m_programHandle(0),

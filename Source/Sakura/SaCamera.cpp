@@ -5,7 +5,7 @@ Author: Darrell Blake
 
 #include "SaCamera.h"
 #include "SaRenderState.h"
-#include "SaInputComponentFreecam.h"
+#include "SaInputComponentFreeCam.h"
 
 using namespace Sakura;
 using namespace SakuraMaths;

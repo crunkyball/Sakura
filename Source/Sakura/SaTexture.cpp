@@ -14,8 +14,8 @@ extern "C" unsigned char *stbi_load_from_memory(unsigned char const *buffer, int
 extern "C" void stbi_image_free(void *retval_from_stbi_load);
 
 SaTexture::SaTexture() :
-    m_state(STATE_UNLOADED),
     m_platformTexture(this),
+    m_state(STATE_UNLOADED),
     m_width(0),
     m_height(0),
     m_bitDepth(0),

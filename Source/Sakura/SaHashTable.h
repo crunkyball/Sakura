@@ -22,7 +22,7 @@ namespace Sakura
     template <class Key, class T>
     class SaHashTable
     {
-        template <class Key, class T>
+        template <class, class>
         friend class SaHashTableItr;
 
     public:

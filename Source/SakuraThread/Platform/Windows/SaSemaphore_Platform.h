@@ -28,8 +28,8 @@ namespace SakuraThread
         bool Signal(uint32_t num);
 
     private:
-        HANDLE          m_handle;
         SaSemaphore*    m_pParent;
+        HANDLE          m_handle;
     };
 }
 

@@ -66,9 +66,10 @@ bool SaThread_Platform::Initialise()
 
     switch(m_pParent->m_threadPriority)
     {
-        case SakuraThread::PRIORITY_LOW: priority = THREAD_PRIORITY_LOWEST; break;
-        case SakuraThread::PRIORITY_HIGH: priority = THREAD_PRIORITY_ABOVE_NORMAL; break;
         case SakuraThread::PRIORITY_HIGHEST: priority = THREAD_PRIORITY_HIGHEST; break;
+        case SakuraThread::PRIORITY_HIGH: priority = THREAD_PRIORITY_ABOVE_NORMAL; break;
+        case SakuraThread::PRIORITY_NORMAL: priority = THREAD_PRIORITY_NORMAL; break;
+        case SakuraThread::PRIORITY_LOW: priority = THREAD_PRIORITY_LOWEST; break;
     }
 
     SetThreadPriority(m_handle, priority);

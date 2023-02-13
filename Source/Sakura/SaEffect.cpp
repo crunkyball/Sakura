@@ -13,8 +13,8 @@ using namespace Sakura;
 bool SaEffect::ms_locked = false;
 
 SaEffect::SaEffect() :
-    m_state(STATE_UNLOADED),
     m_platformEffect(this),
+    m_state(STATE_UNLOADED),
     m_enabled(false),
     m_loadFinishedCallback(NO_CALLBACK)
 {

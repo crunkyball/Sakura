@@ -15,8 +15,8 @@ namespace Sakura
     template <class Key, class T>
     SaHashTable<Key, T>::SaHashTable(uint32_t size, HashFunc hashFunc) :
         m_size(size),
-        m_hashFunc(hashFunc),
-        m_numEntries(0)
+        m_numEntries(0),
+        m_hashFunc(hashFunc)
     {
         m_buckets = new Entry*[m_size];
     

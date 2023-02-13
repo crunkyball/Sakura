@@ -50,8 +50,8 @@ namespace Sakura
                 VERT_DIMENSIONS(vertDimensions),
                 SHAPE_VERTS(shapeVerts),
                 MAX_SHAPES(maxShapes),
-                SHAPE_TYPE(shapeType),
                 MAX_VERTS(SHAPE_VERTS*MAX_SHAPES),
+                SHAPE_TYPE(shapeType),
                 POS_SIZE_BYTES(VERT_DIMENSIONS * sizeof(float))
                 {}
 

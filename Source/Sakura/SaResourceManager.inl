@@ -99,43 +99,6 @@ namespace Sakura
         }
     }
 
-    template <>
-    void SaResourceManager::ResourceManagerThread_Load<SaEffect>(const SaResourceJob* pJob)
-    {
-        ms_tableMutex.Lock();
-        SaResource<SaEffect>* pEffect = GetResourceTable<SaEffect>()->FastFind(pJob->GetResourceHash());
-        ms_tableMutex.Unlock();
-
-        SaFileLoader vertexShaderLoader;
-        SaFileLoader fragmentShaderLoader;
-
-        if (pEffect)
-        {
-            const int32_t MAX_NAME_SIZE = 64;
-
-            bool success = false;
-            char shaderFileName[MAX_NAME_SIZE];
-            sprintf_s(shaderFileName, MAX_NAME_SIZE, "%s_v%s", pJob->GetFileName(), SaEffect_Platform::FILE_EXTENSION);
-            vertexShaderLoader.Load(shaderFileName, NO_CALLBACK, true, true);
-
-            if (vertexShaderLoader.Succeeded())
-            {
-                sprintf_s(shaderFileName, MAX_NAME_SIZE, "%s_f%s", pJob->GetFileName(), SaEffect_Platform::FILE_EXTENSION);
-                fragmentShaderLoader.Load(shaderFileName, NO_CALLBACK, true, true);
-                if (fragmentShaderLoader.Succeeded())
-                {
-                    pEffect->m_element.Load(vertexShaderLoader.GetDataPtr(), fragmentShaderLoader.GetDataPtr(), BIND_FUNC(&OnLoadDone));
-                    success = WaitForLoad();
-                    fragmentShaderLoader.Release(NO_CALLBACK, true);
-                }
-
-                vertexShaderLoader.Release(NO_CALLBACK, true);
-            }
-
-            pEffect->m_state = success ? SaResource<SaEffect>::STATE_READY : SaResource<SaEffect>::STATE_ERROR;
-        }
-    }
-
     template <class T>
     void SaResourceManager::ResourceManagerThread_Unload(const SaResourceJob* pJob)
     {
